@@ -15,7 +15,7 @@ public class Main {
         lab1.homework(args);
         System.out.println("\n------------------------------------------\n");
 
-        lab1.bonus();
+        lab1.bonus(args);
     }
     void compulsory(){
         System.out.println("Hello World!%n");
@@ -164,8 +164,76 @@ public class Main {
         }
     }
 
-    void bonus() {
+    void bonus(String[] args) {
+        int n =  Integer.parseInt(args[0]);
+        int k = Integer.parseInt(args[1]);
+        int[][] randomGraphMatrix = generateRandomGraph(n);
 
+        printMatrix(randomGraphMatrix);
+
+        boolean hasClique = hasClique(randomGraphMatrix, n, k, new int[k], 0, 0);
+        if(hasClique){
+            System.out.println("The graph has a clique of size at least " + k + "\uD83D\uDE00");
+        }
+        else {
+            System.out.println("The graph has NO clique of size at least " + k + "\uD83D\uDE2D");
+        }
+
+        int[][] complementGraph = getComplement(randomGraphMatrix, n);
+        boolean hasStableSet = hasClique(complementGraph, n, k, new int[k], 0, 0);
+        if(hasStableSet){
+            System.out.println("By the way, the graph also has an independent set of size at least " + k + "\uD83D\uDE00");
+        }
+        else {
+            System.out.println("No stable set found...." + "\uD83D\uDE2D");
+        }
     }
+    static int [][] generateRandomGraph(int n) {
+        int [][] matrix = new int[n][n];
+        Random random = new Random();
 
+        for(int i=0; i<n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if(random.nextDouble() < 0.3){
+                    matrix[i][j] = matrix[j][i] = 1;
+                }
+            }
+        }
+        return matrix;
+    }
+    static boolean hasClique(int[][] graph, int n, int k, int[] clique, int size, int start){
+        if(size == k){
+            return true;
+        }
+        for(int i= start; i<n; i++){
+            if(isValidClique(graph, clique, size, i)) {
+                clique[size] = i;
+                if(hasClique(graph, n, k, clique, size+1, i+1)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    static boolean isValidClique(int[][] graph, int[] clique, int size, int vertex){
+        //Can I add the vertex to the clique??? -> i need to check in the graph
+        for(int i=0; i<size; i++){
+            if(graph[clique[i]][vertex] == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+    static int [][] getComplement(int [][] graph, int n){
+        int [][] complement = new int[n][n];
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                if(i!=j){
+                    complement[i][j] = (graph[i][j] == 0) ? 1 : 0;
+                }
+            }
+        }
+        return complement;
+    }
 }
