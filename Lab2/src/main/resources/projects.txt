@@ -1,0 +1,5 @@
+ABE: Mathematical Research,THEORETICAL
+Spotify Dupe,PRACTICAL
+Operating System,PRACTICAL
+Multilinear equations in Cybersecurity,THEORETICAL
+Machine Learning Chatbot,PRACTICALs

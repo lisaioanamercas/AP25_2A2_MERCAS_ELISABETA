@@ -1,0 +1,4 @@
+Gigel Bostanel,2000-05-15,1234
+George Calinescu,2034-05-30,1254
+Frunzulitza Garofitza,1999-03-29,3354
+Adrian CopilulMinune,1969-07-07,7777

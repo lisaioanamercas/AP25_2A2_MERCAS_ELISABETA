@@ -29,7 +29,10 @@ public class Person {
     }
 
     @Override
-    public String toString() {
+/*    public String toString() {
         return getFullName() + " (Birth Date: " + dateOfBirth + ")";
+    }*/
+    public String toString(){
+        return getFullName();
     }
 }

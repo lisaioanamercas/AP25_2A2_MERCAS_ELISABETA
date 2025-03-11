@@ -32,11 +32,15 @@ public class Student extends Person {
     }
     /**
      * Metoda de mai sus explicata: ...
+     *  Verific intai daca referintelesunt identice (sunt acelasi obiect in memorie)
+     *  Verifica daca obj este nnull sau daca nu este de tip student (ambele cazuri rele)
+     *      Ultima verificare din return este in functie de nr matricol obviously
      */
 
     @Override
     public String toString() {
-        return super.toString() + " (RegID: " + regNumber + ")";
+
+        return super.toString();// + " (RegID: " + regNumber + ")";
     }
 
 }
