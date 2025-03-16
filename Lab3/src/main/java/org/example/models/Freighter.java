@@ -18,6 +18,6 @@ public class Freighter extends Aircraft implements CargoCapable{
 
     @Override
     public String toString(){
-        return "Freighter{ name= " + getName() + ", maximumPayLoad= " + maximumPayLoad + " }";
+        return "Freighter {name= " + getName() + ", maximumPayLoad= " + getMaximumMoneyForCargoTransport() + "}";
     }
 }

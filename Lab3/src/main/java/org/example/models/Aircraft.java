@@ -13,7 +13,7 @@ public abstract class Aircraft implements Comparable<Aircraft> {
 
     @Override
     public int compareTo(Aircraft otherAircraft) {
-        if(otherAircraft.getName()!=null) {
+        if(otherAircraft.getName()==null) {
             return -1;
         }
         return this.name.compareTo(otherAircraft.name);

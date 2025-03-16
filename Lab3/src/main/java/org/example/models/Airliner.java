@@ -25,6 +25,6 @@ public class Airliner extends Aircraft implements PassengerCapable, CargoCapable
 
     @Override
     public String toString(){
-        return "Airliner{ name= " + getName() + ", seats= " + getSeatCount() + ", maximumPayLoad= " + getMaximumMoneyForCargoTransport();
+        return "Airliner {name= " + getName() + ", seats= " + getSeatCount() + ", maximumPayLoad= " + getMaximumMoneyForCargoTransport() + "}";
     }
 }
