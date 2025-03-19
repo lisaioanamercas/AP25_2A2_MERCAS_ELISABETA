@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jgrapht-core">
+    <CLASSES>
+      <root url="file://$MAVEN_REPOSITORY$/org/jgrapht/jgrapht-core" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
