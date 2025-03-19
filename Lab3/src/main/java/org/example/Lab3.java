@@ -1,6 +1,9 @@
 package org.example;
 
 import org.example.*;
+import org.example.flight.bonus.ColoringProblemForScheduling;
+import org.example.flight.bonus.ConflictGraph;
+import org.example.flight.bonus.FlightGraphGenerator;
 import org.example.interfaces.*;
 import org.example.models.*;
 import org.example.airport.*;
@@ -15,6 +18,10 @@ public class Lab3 {
 
         lab3.homework();
 
+        System.out.println();
+        System.out.println("__________________________________________________________________________________");
+        System.out.println();
+        lab3.bonus();
     }
 
     public void compulsory(){
@@ -60,6 +67,68 @@ public class Lab3 {
                         + " (" + flight.getArrivalInterval().getStart()
                         + " - " + flight.getArrivalInterval().getEnd()
                         + ", " + duration + " min)");
+            }
+        }
+    }
+
+    public void bonus(){
+        try {
+            String flightsFile = "C:\\Users\\Elisa\\Desktop\\Java\\PA\\Lab3\\flights.txt";
+            String runwaysFile = "C:\\Users\\Elisa\\Desktop\\Java\\PA\\Lab3\\runways.txt";
+
+            double selectionProbability = 0.5;
+
+            List<Flight> selectedFlights = FlightGraphGenerator.loadFlights(flightsFile, selectionProbability);
+            List<Runway> selectedRunways = FlightGraphGenerator.loadRunways(runwaysFile, selectionProbability);
+
+            if(selectedRunways.isEmpty()){
+                System.out.println("No Runways found. exiting...");
+                return;
+            }
+            ConflictGraph flightGraph = new ConflictGraph(selectedFlights);
+
+            System.out.println("\n=== Zboruri care se cearta ===");
+            flightGraph.printAdjacencyList();
+
+            System.out.println("\n===============================");
+
+            ColoringProblemForScheduling scheduler = new ColoringProblemForScheduling();
+            Map<Flight, Runway> flightAssignemts = scheduler.assignFlightstoRunways(selectedFlights, selectedRunways);
+
+            FinalBonusPrintingMethod(flightAssignemts);
+
+
+        }catch(Exception e){
+            System.err.println("Error reading files: " + e.getMessage());
+        }
+    }
+
+    void FinalBonusPrintingMethod(Map<Flight, Runway> flightAssignemts){
+        System.out.println("\n=== Asignarea Finala si (sper ca) echitabila a zborurilor ===");
+
+        // Grupez zborurile dupa runway
+        Map<Runway, List<Flight>> runwayAssignments = new HashMap<>();
+        for(var entry : flightAssignemts.entrySet()){
+            runwayAssignments.putIfAbsent(entry.getValue(), new ArrayList<>());
+            runwayAssignments.get(entry.getValue()).add(entry.getKey());
+        }
+
+        for (Map.Entry<Runway, List<Flight>> entry : runwayAssignments.entrySet()) {
+            Runway runway = entry.getKey();
+            List<Flight> flights = entry.getValue();
+
+            // Print runway ID
+            System.out.println("Runway " + runway.getId() + ":");
+
+            // Print flights under the runway
+            for (Flight flight : flights) {
+                long duration = flight.getArrivalInterval().getStart()
+                        .until(flight.getArrivalInterval().getEnd(), java.time.temporal.ChronoUnit.MINUTES);
+
+                System.out.println("  - " + flight.getFlightNumber() +
+                        " (" + flight.getArrivalInterval().getStart() +
+                        " - " + flight.getArrivalInterval().getEnd() +
+                        ", " + duration + " min)");
             }
         }
     }
